@@ -18,4 +18,5 @@ The BusinessClassifier program is designed to categorize businesses using Google
 For more information on iMobile3, see the link below:
 
 ![alt text](https://www.imobile3.com/wp-content/uploads/2015/05/nav-logo-imobile3-dark-2x.png.pagespeed.ce.xYqpQD5-kC.png)
+
 https://www.imobile3.com/
