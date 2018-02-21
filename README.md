@@ -5,7 +5,12 @@
 
 The BusinessClassifier program is designed to categorize businesses using Google and Yelp data. It was origionally built in order to facilitate and automate the classification of merchants who use iMobile3's point-of-sale and marketplace software. The data produced by this algorithm was manually translated to SIC codes for iMobile3's internal classification purposes.
 
+## iMobile3
+
+For more information on iMobile3, see the link below:
+
 ![alt text](https://www.imobile3.com/wp-content/uploads/2015/05/nav-logo-imobile3-dark-2x.png.pagespeed.ce.xYqpQD5-kC.png)
+
 https://www.imobile3.com/
 
 ## Setup
