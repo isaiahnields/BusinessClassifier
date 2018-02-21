@@ -12,7 +12,7 @@ The following code is compatible with Python 3.6. The Google maps classification
 ## Setup
 
 1. Clone the repository to your computer and open it with PyCharm.
-2. Run 'pip install -r requirements.txt' in terminal to install dependencies.
+2. Run 'pip install -r requirements.txt' in the PyCharm terminal to install dependencies.
 3. Obtain an API key from Yelp by creating an app (https://www.yelp.com/developers/documentation/v3/authentication).
 4. Paste the API key from Yelp into '/data/api_key.txt'.
 5. Add the data containing the businesses that you would like to classify to '/data/merchants.csv'.
