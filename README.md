@@ -3,7 +3,7 @@
 
 ## Purpose
 
-The BusinessClassifier program is designed to categorize businesses using Google and Yelp data. It was origionally built in order to facilitate and automate the classification of merchants who use iMobile3's point-of-sale and marketplace software. The data produced by this algorithm was manually translated to SIC codes for iMobile3's internal classification purposes.
+The BusinessClassifier program is designed to categorize businesses using Google and Yelp data. It was originally built in order to facilitate and automate the classification of merchants who use iMobile3's point-of-sale and marketplace software. The data produced by this algorithm was manually translated to SIC codes for iMobile3's internal classification purposes.
 
 ## Compatibility
 
