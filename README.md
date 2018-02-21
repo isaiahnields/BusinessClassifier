@@ -1,6 +1,6 @@
-# BusinessClassifier
+## BusinessClassifier
 
-## Setup
+### Setup
 
 1. Obtain an API key from Yelp by creating an app (https://www.yelp.com/developers/documentation/v3/authentication).
 2. Paste the API key from Yelp into '/data/api_key.txt'.
