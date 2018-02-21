@@ -98,4 +98,4 @@ ENV/
 # mypy
 .mypy_cache/
 *.csv
-api_key.txt
+data/api_key.txt

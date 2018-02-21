@@ -28,21 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yelp.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="yelp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/yelp.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="api_key.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/api_key.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -124,9 +114,9 @@
         <option value="$PROJECT_DIR$/scripts/yelp.py" />
         <option value="$PROJECT_DIR$/data/merchants.csv" />
         <option value="$PROJECT_DIR$/scripts/writer.py" />
-        <option value="$PROJECT_DIR$/data/api_key.txt" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/scripts/google.py" />
+        <option value="$PROJECT_DIR$/data/api_key.txt" />
       </list>
     </option>
   </component>
@@ -163,6 +153,11 @@
             <path>
               <item name="BusinessClassifier" type="b2602c69:ProjectViewProjectNode" />
               <item name="BusinessClassifier" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BusinessClassifier" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BusinessClassifier" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -517,14 +512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/yelp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/reader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -554,7 +541,15 @@
     <entry file="file://$PROJECT_DIR$/data/api_key.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="0" column="128" lean-forward="false" selection-start-line="0" selection-start-column="128" selection-end-line="0" selection-end-column="128" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/yelp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
           <folding />
         </state>
       </provider>
