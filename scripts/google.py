@@ -8,8 +8,14 @@ OPERATING_SYSTEM = platform.system()
 
 if (OPERATING_SYSTEM == 'Windows'):
     driver = webdriver.Chrome('C:/Users/imnie/PycharmProjects/BusinessClassifier/drivers/chromedriver.exe')
+elif (OPERATING_SYSTEM == 'Darwin'):
+    driver = webdriver.Chrome('C:/Users/imnie/PycharmProjects/BusinessClassifier/drivers/chromedriver_mac')
+elif (OPERATING_SYSTEM == 'Linux'):
+    driver = webdriver.Chrome('C:/Users/imnie/PycharmProjects/BusinessClassifier/drivers/chromedriver_linux')
+else:
+    raise OSError('Operating system must be either Windows, Mac OS, or Linux.')
 
-#
+
 def class_wait(class_, time):
     """Wait until a specified class element loads in HTML.
     Args:

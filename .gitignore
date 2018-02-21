@@ -98,3 +98,8 @@ ENV/
 # mypy
 .mypy_cache/
 *.csv
+*.txt
+*.csv
+*.csv
+data/merchants.csv
+data/results.csv
