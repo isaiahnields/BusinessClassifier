@@ -99,3 +99,4 @@ ENV/
 .mypy_cache/
 *.csv
 data/api_key.txt
+data/api_key.txt
