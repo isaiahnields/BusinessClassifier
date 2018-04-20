@@ -7,7 +7,7 @@ The BusinessClassifier program is designed to categorize businesses using Google
 
 ## Compatibility
 
-The following code is compatible with Python 3.6. The Google maps classification algorithm is only compatible with Windows, Linux, and Mac OS as it requires Selenium in order to control Chrome. The Yelp algorithm directly interfaces with the Yelp API and thus can be run from essentially any Python 3.6 interpreter.
+The following code is compatible with Python 3.6. The Google maps classification algorithm is only compatible with Windows, Linux, and Mac OS as it requires Selenium in order to control Chrome. The Yelp algorithm directly interfaces with the Yelp API and thus can be run with essentially any Python 3.6 interpreter.
 
 ## Setup
 
