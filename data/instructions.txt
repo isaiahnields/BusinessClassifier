@@ -1,0 +1,4 @@
+Instructions:
+
+1. Create a .txt file in this folder and paste your yelp API into the .txt file.
+2. Add a .csv file containing your business data to this folder.
