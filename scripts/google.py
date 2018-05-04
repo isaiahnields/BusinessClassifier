@@ -28,7 +28,7 @@ def class_wait(class_, time):
     """
     Wait until a specified class element loads in HTML.
 
-    :param class: The name of the class element in the HTML that needs to be loaded before continuing.
+    :param class_: The name of the class element in the HTML that needs to be loaded before continuing.
     :param time: The maximum amount of time to wait until an element is loaded.
     :return element: The element at the specified by the class name
     """

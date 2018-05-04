@@ -10,4 +10,5 @@ def read(filename):
     file = open(filename, 'r')
     reader = csv.reader(file)
     result = [row for row in reader]
+    file.close()
     return result
