@@ -1,4 +1,5 @@
 import requests
+import os
 from urllib.parse import quote
 
 # Yelp Fusion no longer uses OAuth as of December 7, 2017.
@@ -7,7 +8,9 @@ from urllib.parse import quote
 # You can find it on
 # https://www.yelp.com/developers/v3/manage_app
 
-API_KEY = open("C:/Users/imnie/PycharmProjects/BusinessClassifier/data/api_key.txt", 'r').read()
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))[:50]
+API_KEY = open(ROOT_DIR + "/data/api_key.txt", 'r').read()
 
 # API constants, you shouldn't have to change these.
 API_HOST = 'https://api.yelp.com'
@@ -21,17 +24,17 @@ SEARCH_LIMIT = 1
 
 
 def request(host, path, api_key, url_params=None):
-    """Given your API_KEY, send a GET request to the API.
-    Args:
-        host (str): The domain host of the API.
-        path (str): The path of the API after the domain.
-        api_key (str): Your API Key.
-        url_params (dict): An optional set of query parameters in the request.
-    Returns:
-        dict: The JSON response from the request.
-    Raises:
-        HTTPError: An error occurs from the HTTP request.
     """
+    Given your API_KEY, send a GET request to the API.
+
+    :param host: The domain host of the API.
+    :param path: The path of the API after the domain.
+    :param api_key: Your API Key.
+    :param url_params: An optional set of query parameters in the request.
+    :return dict: The JSON response from the request.
+    :raise HTTPError: An error occurs from the HTTP request.
+    """
+
     url_params = url_params or {}
     url = '{0}{1}'.format(host, quote(path.encode('utf8')))
     headers = {
@@ -44,12 +47,12 @@ def request(host, path, api_key, url_params=None):
 
 
 def search(term, location):
-    """Query the Search API by a search term and location.
-    Args:
-        term (str): The search term passed to the API.
-        location (str): The search location passed to the API.
-    Returns:
-        dict: The JSON response from the request.
+    """
+    Query the Search API by a search term and location.
+
+    :param term: The search term passed to the API.
+    :param location: The search location passed to the API.
+    :return dict: The JSON response from the request.
     """
 
     url_params = {
@@ -61,21 +64,32 @@ def search(term, location):
 
 
 def get_business(api_key, business_id):
-    """Query the Business API by a business ID.
-    Args:
-        :param api_key: the API key used to access Yelp
-        :param business_id: the Yelp ID of a business
-    Returns:
-        dict: The JSON response from the request.
-
     """
+    Query the Business API by a business ID.
+
+    :param api_key: the API key used to access Yelp
+    :param business_id: the Yelp ID of a business
+    :return dict: The JSON response from the request.
+    """
+
     business_path = BUSINESS_PATH + business_id
 
     return request(API_HOST, business_path, api_key)
 
 
 def get_category(term, location):
+    """
+    Query the Business API by a business ID.
+
+    :param term: the name of the business that should be searched
+    :param location: the location of the business that should be searched
+    :return result: an array of the business name with its result
+    """
+
     try:
-        return search(term, location)['businesses'][0]['categories'][0]['title']
+        result = search(term, location)
+        return [result['businesses'][0]['name'], result['businesses'][0]['categories'][0]['title']]
+    except KeyError:
+        return ['None', 'None']
     except IndexError:
-        return 'None'
+        return ['None', 'None']
