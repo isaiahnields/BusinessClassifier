@@ -1,11 +1,13 @@
+from iohandler import reader
 import iohandler
 import scrapers
 
+
 # load the keys from the businesses that you would like to classify
-data = iohandler.reader.read('keys/merchants.csv')
+data = reader.read('keys/merchants.csv')
 
 # create a csv file that the results will be written to
-results = iohandler.writer.FileWriter('keys/results.csv')
+results = iohandler.FileWriter('keys/results.csv')
 
 # iterate through the keys read from the merchants.csv file
 for line in data:

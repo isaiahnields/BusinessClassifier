@@ -1,32 +1,37 @@
 import csv
 
 
-def read(filename):
-    """
-    Given a the location of a csv file, this function returns an array of the data.
+class FileReader:
 
-    :param filename: a string that points to the csv file containing business information
-    :return result: an array containing the rows of the csv file
-    """
+    def __init__(self, file_location):
+        """
+        Opens the file at file location and creates a csv reader for that file.
 
-    # opens the csv file and passes the information into the csv reader
-    file = open(filename, 'r')
-    reader = csv.reader(file)
+        :param file_location: the location of the file that is to be read
+        """
 
-    # creates an array from the csv file
-    result = []
-    for row in reader:
+        # open the csv file located at file_location in read mode
+        file = open(file_location, 'r')
 
-        # if there are more than two digits in the business name
-        if sum(c.isdigit() for c in row[1]) > 2:
+        # create a reader that reads from the file
+        self.reader = csv.reader(file)
 
-            # remove the digits from the business name
-            row[1] = ''.join([i for i in row[1] if not i.isdigit()])
+    def __iter__(self):
+        """
+        A necessary method for creating an iterable. Returns the iterable itself.
 
-        # add the business information to the result array
-        result.append(row)
+        :return self: the iterable object itself
+        """
 
-    # close the file
-    file.close()
+        # return the iterator
+        return self
 
-    return result
+    def next(self):
+        """
+        Returns the next object in the iterator.
+
+        :return next: the next object in the iterator
+        """
+
+        # return the next object in the iterator
+        return next(self.reader)

@@ -1,81 +1,98 @@
-import os
 import requests
-from urllib.parse import quote
 from geopy import geocoders
 from geopy.exc import GeocoderTimedOut
 
-# get the root directory of the project
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))[:50]
 
-# retrieve the api key from storage
-ACCESS_TOKEN = open(ROOT_DIR + "/keys/facebook_key.txt", 'r').read()
+class Facebook:
 
-# specify api host and search path
-API_HOST = 'https://graph.facebook.com'
-SEARCH_PATH = '/v2.11/search'
+    def __init__(self):
+        """
+        Initializes the member variables for the facebook api.
+        """
 
-# set up geocoder to convert city and state into coordinates
-gn = geocoders.GeoNames(username='isaiahnields')
+        # retrieves the api key from storage
+        self.access_token = open("../keys/facebook.txt", 'r').read()
 
-def request(host, path, url_params=None):
-    """
-    Given your API_KEY, send a GET request to the API.
+        # creates a variable for the api host
+        self.api_host = 'https://graph.facebook.com/v3.0/search'
 
-    :param host: The domain host of the API.
-    :param path: The path of the API after the domain.
-    :param api_key: Your API Key.
-    :param url_params: An optional set of query parameters in the request.
-    :return dict: The JSON response from the request.
-    :raise HTTPError: An error occurs from the HTTP request.
-    """
+        # sets up geocoder to convert city and state into coordinates
+        self.user_name = open("../keys/geonames.txt", 'r').read()
+        self.geocoder = geocoders.GeoNames(username=self.user_name)
 
-    url_params = url_params or {}
-    url = '{0}{1}'.format(host, quote(path.encode('utf8')))
+    def request(self, params=None):
+        """
+        Creates a get request to the api host with the specified parameters.
 
-    response = requests.request('GET', url, params=url_params)
+        :param params: the parameters that will be used in the get request
+        :return response: the response from the api host
+        """
 
-    return response.json()
+        # if params is none, set it to an empty dictionary
+        params = params or {}
 
-def search(term, location):
-    """
-    Given the business name and location, return the business information.
+        # make the get request to the api host and store the response
+        response = requests.request('GET', self.api_host, params=params)
 
-    :param term: the name of the business
-    :param location: the location of the business
-    :return request: the keys about the business of interest
-    """
+        # return the processed json response
+        return response.json()
 
-    # use geopy to get the coordinates from city and state information
-    coordinates = gn.geocode(location)[1]
-    center = str(coordinates[0]) + ',' + str(coordinates[1])
+    def search(self, name, location):
+        """
+        Given the business name and location, return the business information.
 
-    # package the params into a dictionary
-    params = {
-        'type': 'place',
-        'fields': 'name,category_list',
-        'q': term,
-        'center': center,
-        'access_token': ACCESS_TOKEN
-    }
+        :param name: the name of the business
+        :param location: the location of the business
+        :return request: the keys about the business of interest
+        """
 
-    # make and return the request
-    return request(API_HOST, SEARCH_PATH, params)
+        # uses geocoder to get the coordinates the from city and state information
+        coordinates = self.geocoder.geocode(location)[1]
+        center = str(coordinates[0]) + ',' + str(coordinates[1])
 
-def get_category(term, location):
-    """
-    Given the business name and location, return the business name and category.
+        # packages the params into a dictionary
+        params = {
+            'type': 'place',
+            'q': name,
+            'center': center,
+            'fields': 'name,category_list',
+            'access_token': self.access_token
+        }
 
-    :param term: the name of the business that should be searched
-    :param location: the location of the business that should be searched
-    :return result: an array containing the business name and category
-    """
+        # makes and returns the request
+        return self.request(params)
 
-    try:
-        result = search(term, location)
-        return [result['keys'][0]['name'], result['keys'][0]['category_list'][0]['name']]
-    except KeyError:
-        return ['None', 'None']
-    except IndexError:
-        return ['None', 'None']
-    except GeocoderTimedOut:
-        return ['Timeout', 'Timeout']
+    def get_category(self, name, location):
+        """
+        Given the business name and location, return the business name and category.
+
+        :param name: the name of the business that should be searched
+        :param location: the location of the business that should be searched
+        :return result: an array containing the business name and category
+        """
+
+        try:
+
+            # search for the business by its name and location
+            result = self.search(name, location)
+
+            # return an array containing the business name and category
+            return [result['data'][0]['name'], result['data'][0]['category_list'][0]['name']]
+
+        # if there is no data at a specific key
+        except KeyError:
+
+            # return a 'None' array
+            return ['None', 'None']
+
+        # if there is no data at a specified index
+        except IndexError:
+
+            # return a 'None' array
+            return ['None', 'None']
+
+        # if the the geocoder could not process the request
+        except GeocoderTimedOut:
+
+            # return a 'Timeout' array
+            return ['Timeout', 'Timeout']

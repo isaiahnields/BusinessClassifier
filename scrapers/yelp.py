@@ -1,81 +1,82 @@
 import requests
-import os
-from urllib.parse import quote
-
-# Yelp Fusion no longer uses OAuth as of December 7, 2017.
-# You no longer need to provide Client ID to fetch Data
-# It now uses private keys to authenticate requests (API Key)
-# You can find it on
-# https://www.yelp.com/developers/v3/manage_app
 
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))[:50]
-API_KEY = open(ROOT_DIR + "/keys/yelp_key.txt", 'r').read()
+class Yelp:
 
-# API constants, you shouldn't have to change these.
-API_HOST = 'https://api.yelp.com'
-SEARCH_PATH = '/v3/businesses/search'
-BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
+    def __init__(self):
 
-# Defaults for our simple example.
-DEFAULT_TERM = 'dinner'
-DEFAULT_LOCATION = 'San Francisco, CA'
-SEARCH_LIMIT = 1
+        # retrieves the api key from storage
+        self.access_token = open("../keys/yelp.txt", 'r').read()
 
+        # creates a variable for the api host
+        self.api_host = 'https://api.yelp.com/v3/businesses/search'
 
-def request(host, path, api_key, url_params=None):
-    """
-    Given your API_KEY, send a GET request to the API.
+    def request(self, params=None):
+        """
+        Creates a get request to the api host with the specified parameters.
 
-    :param host: The domain host of the API.
-    :param path: The path of the API after the domain.
-    :param api_key: Your API Key.
-    :param url_params: An optional set of query parameters in the request.
-    :return dict: The JSON response from the request.
-    :raise HTTPError: An error occurs from the HTTP request.
-    """
+        :param params: the parameters that will be used in the get request
+        :return response: the response from the api host
+        """
 
-    url_params = url_params or {}
-    url = '{0}{1}'.format(host, quote(path.encode('utf8')))
-    headers = {
-        'Authorization': 'Bearer %s' % api_key,
-    }
+        # if params is none, set it to an empty dictionary
+        params = params or {}
 
-    response = requests.request('GET', url, headers=headers, params=url_params)
+        # creates the header containing the api key
+        headers = {
+            'Authorization': 'Bearer %s' % self.access_token,
+        }
 
-    return response.json()
+        # make the get request to the api host and store the response
+        response = requests.request('GET', self.api_host, headers=headers, params=params)
 
+        # return the processed json response
+        return response.json()
 
-def search(term, location):
-    """
-    Query the Search API by a search term and location.
+    def search(self, name, location):
+        """
+        Given the business name and location, return the business information.
 
-    :param term: The search term passed to the API.
-    :param location: The search location passed to the API.
-    :return dict: The JSON response from the request.
-    """
+        :param name: the name of the business
+        :param location: the location of the business
+        :return request: the keys about the business of interest
+        """
 
-    url_params = {
-        'term': term.replace(' ', '+'),
-        'location': location.replace(' ', '+'),
-        'limit': SEARCH_LIMIT
-    }
-    return request(API_HOST, SEARCH_PATH, API_KEY, url_params=url_params)
+        # packages the params into a dictionary
+        params = {
+            'term': name.replace(' ', '+'),
+            'location': location.replace(' ', '+'),
+            'limit': 1
+        }
 
+        # makes and returns the request
+        return self.request(params)
 
-def get_category(term, location):
-    """
-    Query the Business API by a business ID.
+    def get_category(self, name, location):
+        """
+        Given the business name and location, return the business name and category.
 
-    :param term: the name of the business that should be searched
-    :param location: the location of the business that should be searched
-    :return result: an array of the business name with its result
-    """
+        :param name: the name of the business that should be searched
+        :param location: the location of the business that should be searched
+        :return result: an array containing the business name and category
+        """
 
-    try:
-        result = search(term, location)
-        return [result['businesses'][0]['name'], result['businesses'][0]['categories'][0]['title']]
-    except KeyError:
-        return ['None', 'None']
-    except IndexError:
-        return ['None', 'None']
+        try:
+
+            # search for the business by its name and location
+            result = self.search(name, location)
+
+            # return an array containing the business name and category
+            return [result['businesses'][0]['name'], result['businesses'][0]['categories'][0]['title']]
+
+        # if there is no data at a specific key
+        except KeyError:
+
+            # return a 'None' array
+            return ['None', 'None']
+
+        # if there is no data at a specified index
+        except IndexError:
+
+            # return a 'None' array
+            return ['None', 'None']
