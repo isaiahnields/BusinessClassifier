@@ -10,7 +10,7 @@ from urllib.parse import quote
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))[:50]
-API_KEY = open(ROOT_DIR + "/data/api_key.txt", 'r').read()
+API_KEY = open(ROOT_DIR + "/data/yelp_key.txt", 'r').read()
 
 # API constants, you shouldn't have to change these.
 API_HOST = 'https://api.yelp.com'
@@ -61,20 +61,6 @@ def search(term, location):
         'limit': SEARCH_LIMIT
     }
     return request(API_HOST, SEARCH_PATH, API_KEY, url_params=url_params)
-
-
-def get_business(api_key, business_id):
-    """
-    Query the Business API by a business ID.
-
-    :param api_key: the API key used to access Yelp
-    :param business_id: the Yelp ID of a business
-    :return dict: The JSON response from the request.
-    """
-
-    business_path = BUSINESS_PATH + business_id
-
-    return request(API_HOST, business_path, api_key)
 
 
 def get_category(term, location):

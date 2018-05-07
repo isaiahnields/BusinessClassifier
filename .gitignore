@@ -100,3 +100,6 @@ ENV/
 .mypy_cache/
 *.csv
 data/api_key.txt
+data/facebook_key.txt
+data/yelp_key.txt
+data/geopy_username.txt
