@@ -1,6 +1,6 @@
 from iohandler import reader
 import iohandler
-import scrapers
+import scraper
 
 
 # load the keys from the businesses that you would like to classify
@@ -17,13 +17,13 @@ for line in data:
         break
 
     # get the business category from Google
-    google_result = scrapers.google.get_category(line[1], line[6])
+    google_result = scraper.google.get_category(line[1], line[6])
 
     # get the business category from Yelp
-    yelp_result = scrapers.yelp.get_category(line[1], line[6])
+    yelp_result = scraper.yelp.get_category(line[1], line[6])
 
     # get the business category from Facebook
-    facebook_result = scrapers.facebook.get_category(line[1], line[6])
+    facebook_result = scraper.facebook.get_category(line[1], line[6])
 
     # write the keys to results.csv
     results.write([line[0], line[1]] + google_result + yelp_result + facebook_result)
