@@ -10,7 +10,7 @@ from urllib.parse import quote
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))[:50]
-API_KEY = open(ROOT_DIR + "/data/yelp_key.txt", 'r').read()
+API_KEY = open(ROOT_DIR + "/keys/yelp_key.txt", 'r').read()
 
 # API constants, you shouldn't have to change these.
 API_HOST = 'https://api.yelp.com'

@@ -8,7 +8,7 @@ from geopy.exc import GeocoderTimedOut
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))[:50]
 
 # retrieve the api key from storage
-ACCESS_TOKEN = open(ROOT_DIR + "/data/facebook_key.txt", 'r').read()
+ACCESS_TOKEN = open(ROOT_DIR + "/keys/facebook_key.txt", 'r').read()
 
 # specify api host and search path
 API_HOST = 'https://graph.facebook.com'
@@ -42,7 +42,7 @@ def search(term, location):
 
     :param term: the name of the business
     :param location: the location of the business
-    :return request: the data about the business of interest
+    :return request: the keys about the business of interest
     """
 
     # use geopy to get the coordinates from city and state information
@@ -72,7 +72,7 @@ def get_category(term, location):
 
     try:
         result = search(term, location)
-        return [result['data'][0]['name'], result['data'][0]['category_list'][0]['name']]
+        return [result['keys'][0]['name'], result['keys'][0]['category_list'][0]['name']]
     except KeyError:
         return ['None', 'None']
     except IndexError:
