@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
+from scraper import facebook, google, yelp
+from iohandler import *
 
 
 class Application(tk.Frame):
@@ -12,18 +14,6 @@ class Application(tk.Frame):
         self.pack()
 
         # initializes tkinter variables
-        self.initialize_variables()
-
-        # packs frames into root window
-        self.create_file_frame().grid(row=0, column=0, pady=10)
-        self.create_options_frame().grid(row=1, column=0, sticky='w', pady=10)
-        tk.Button(self, text="Run", width=5).grid(row=2, column=0, sticky='e')
-
-    def initialize_variables(self):
-        """
-        Initializes variables that are necessary for the Tkinter graphical user interface.
-        """
-        # initializes necessary string variables
         self.data_location_variable = tk.StringVar()
         self.results_location_variable = tk.StringVar()
         self.name_rows = tk.StringVar()
@@ -31,22 +21,59 @@ class Application(tk.Frame):
         self.facebook_access_token = tk.StringVar()
         self.geonames_username = tk.StringVar()
         self.yelp_api_key = tk.StringVar()
+        self.facebook_variable = tk.IntVar()
+        self.google_variable = tk.IntVar()
+        self.yelp_variable = tk.IntVar()
 
-        # adds traces to string variables so that they are saved when edited
+        # restores the variables to their value stored in data
+        self.restore_variables()
+
+        # packs frames into root window
+        self.create_file_frame().grid(row=0, column=0, pady=10)
+        self.create_options_frame().grid(row=1, column=0, sticky='w', pady=10)
+        tk.Button(self, text="Run", width=5).grid(row=2, column=0, sticky='e')
+
+    def restore_variables(self):
+        """
+        Initializes variables that are necessary for the Tkinter graphical user interface.
+        """
+
+        # loads the location and key variables from data
+        file_locations = open("data/locations.txt", 'r').read().split('\n')
+        keys = open("data/keys.txt", 'r').read().split('\n')
+
+        # sets the tkinter variables to the values pulled from data
+        self.data_location_variable.set(file_locations[0])
+        self.results_location_variable.set(file_locations[1])
+        self.facebook_access_token.set(keys[0])
+        self.geonames_username.set(keys[1])
+        self.yelp_api_key.set(keys[2])
+
+        # set the Google option to true as it doesn't need an API key
+
+        self.google_variable.set(True)
+
+        # if the Facebook key is not empty and the GeoNames username is not empty
+        if keys[0] != "" and keys[0] != "":
+
+            # check the option to scrape Facebook
+            self.facebook_variable.set(True)
+
+        # if the Yelp key is not empty
+        if keys[2] != "":
+
+            # check the option to scrape Yelp
+            self.yelp_variable.set(True)
+
+        # adds traces to variables so that they are saved when edited
         self.data_location_variable.trace("w", self.save)
         self.results_location_variable.trace("w", self.save)
         self.facebook_access_token.trace("w", self.save)
         self.geonames_username.trace("w", self.save)
         self.yelp_api_key.trace("w", self.save)
-
-        # initializes necessary int variables
-        self.facebook_variable = tk.IntVar()
-        self.google_variable = tk.IntVar()
-        self.yelp_variable = tk.IntVar()
-
-        # adds traces to int variables so that keys are checked when the checkbox is checked
-
-
+        self.facebook_variable.trace("w", self.save)
+        self.google_variable.trace("w", self.save)
+        self.yelp_variable.trace("w", self.save)
 
     def create_file_frame(self):
         """
@@ -83,15 +110,15 @@ class Application(tk.Frame):
 
         # adds Facebook label and check box to the options frame
         tk.Label(options_frame, text="Facebook", anchor='w').grid(row=1, column=0)
-        tk.Checkbutton(options_frame).grid(row=1, column=1)
+        tk.Checkbutton(options_frame, variable=self.facebook_variable).grid(row=1, column=1)
 
         # adds Google label and check box to the options frame
         tk.Label(options_frame, text="Google", anchor='w').grid(row=2, column=0)
-        tk.Checkbutton(options_frame).grid(row=2, column=1)
+        tk.Checkbutton(options_frame, variable=self.google_variable).grid(row=2, column=1)
 
         # adds Yelp label and check box to the options frame
         tk.Label(options_frame, text="Yelp", anchor='w').grid(row=3, column=0)
-        tk.Checkbutton(options_frame).grid(row=3, column=1)
+        tk.Checkbutton(options_frame, variable=self.yelp_variable).grid(row=3, column=1)
 
         # adds Facebook access token label and entry box to the options frame
         tk.Label(options_frame, text="Facebook Access Token", anchor='w').grid(row=1, column=2)
@@ -129,9 +156,9 @@ class Application(tk.Frame):
         # sets the data location variable to the chosen file location
         self.results_location_variable.set(file_location)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args):
         """
-
+        Saves the keys and locations entered by the user.
         """
 
         # opens the keys file
@@ -149,6 +176,15 @@ class Application(tk.Frame):
         location_file.write(self.data_location_variable.get() + '\n')
         location_file.write(self.results_location_variable.get() + '\n')
 
+    def run(self):
+        """
+        Runs the Business classification algorithm based on the user settings.
+        """
+
+        # loads instances of scrapers
+        self.facebook = facebook.Facebook(self.facebook_access_token.get(), self.geonames_username.get())
+        self.google = google.Google()
+        self.yelp = yelp.Yelp(self.yelp_api_key.get())
 
 # creates the tkinter root
 root = tk.Tk()

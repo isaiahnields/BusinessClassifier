@@ -3,10 +3,10 @@ import requests
 
 class Yelp:
 
-    def __init__(self):
+    def __init__(self, api_key):
 
         # retrieves the api key from storage
-        self.access_token = open("../data/yelp.txt", 'r').read()
+        self.api_key = api_key
 
         # creates a variable for the api host
         self.api_host = 'https://api.yelp.com/v3/businesses/search'
@@ -24,7 +24,7 @@ class Yelp:
 
         # creates the header containing the api key
         headers = {
-            'Authorization': 'Bearer %s' % self.access_token,
+            'Authorization': 'Bearer %s' % self.api_key,
         }
 
         # make the get request to the api host and store the response
@@ -80,3 +80,6 @@ class Yelp:
 
             # return a 'None' array
             return ['None', 'None']
+
+    def test(self):
+        return self.get_category("Chipotle Mexican Grill", "32217")[0] == "Chipotle Mexican Grill"

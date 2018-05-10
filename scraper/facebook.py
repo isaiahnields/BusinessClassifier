@@ -5,19 +5,19 @@ from geopy.exc import GeocoderTimedOut
 
 class Facebook:
 
-    def __init__(self):
+    def __init__(self, access_token, user_name):
         """
         Initializes the member variables for the facebook api.
         """
 
-        # retrieves the api key from storage
-        self.access_token = open("../data/facebook.txt", 'r').read()
+        # initializes the access token and user name variables
+        self.access_token = access_token
+        self.user_name = user_name
 
         # creates a variable for the api host
         self.api_host = 'https://graph.facebook.com/v3.0/search'
 
         # sets up geocoder to convert city and state into coordinates
-        self.user_name = open("../data/geonames.txt", 'r').read()
         self.geocoder = geocoders.GeoNames(username=self.user_name)
 
     def request(self, params=None):
@@ -96,3 +96,6 @@ class Facebook:
 
             # return a 'Timeout' array
             return ['Timeout', 'Timeout']
+
+    def test(self):
+        return self.get_category("Chipotle Mexican Grill", "32217")[0] == "Chipotle Mexican Grill"
