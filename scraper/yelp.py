@@ -6,7 +6,7 @@ class Yelp:
     def __init__(self):
 
         # retrieves the api key from storage
-        self.access_token = open("../keys/yelp.txt", 'r').read()
+        self.access_token = open("../data/yelp.txt", 'r').read()
 
         # creates a variable for the api host
         self.api_host = 'https://api.yelp.com/v3/businesses/search'

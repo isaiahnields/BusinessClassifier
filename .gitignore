@@ -98,11 +98,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# File types
 *.csv
-data/api_key.txt
-data/facebook_key.txt
-data/yelp_key.txt
-data/geopy_username.txt
-keys/yelp.txt
-keys/geonames.txt
-keys/facebook.txt
+*.txt
+*.DS_Store

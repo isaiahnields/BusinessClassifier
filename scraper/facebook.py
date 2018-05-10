@@ -11,13 +11,13 @@ class Facebook:
         """
 
         # retrieves the api key from storage
-        self.access_token = open("../keys/facebook.txt", 'r').read()
+        self.access_token = open("../data/facebook.txt", 'r').read()
 
         # creates a variable for the api host
         self.api_host = 'https://graph.facebook.com/v3.0/search'
 
         # sets up geocoder to convert city and state into coordinates
-        self.user_name = open("../keys/geonames.txt", 'r').read()
+        self.user_name = open("../data/geonames.txt", 'r').read()
         self.geocoder = geocoders.GeoNames(username=self.user_name)
 
     def request(self, params=None):
