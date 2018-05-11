@@ -25,6 +25,7 @@ class FileWriter:
 
         # write the data to the file
         self.writer.writerow(row)
+        self.file.flush()
 
     def close(self):
         """

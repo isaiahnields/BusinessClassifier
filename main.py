@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from scraper import facebook, google, yelp
-from iohandler import *
+from iohandler import reader, writer
+from tkinter import messagebox
+import webbrowser
 
 
 class Application(tk.Frame):
@@ -16,64 +18,94 @@ class Application(tk.Frame):
         # initializes tkinter variables
         self.data_location_variable = tk.StringVar()
         self.results_location_variable = tk.StringVar()
-        self.name_rows = tk.StringVar()
-        self.location_rows = tk.StringVar()
+        self.name_columns = tk.StringVar()
+        self.location_columns = tk.StringVar()
         self.facebook_access_token = tk.StringVar()
         self.geonames_username = tk.StringVar()
         self.yelp_api_key = tk.StringVar()
-        self.facebook_variable = tk.IntVar()
-        self.google_variable = tk.IntVar()
-        self.yelp_variable = tk.IntVar()
 
         # restores the variables to their value stored in data
         self.restore_variables()
 
         # packs frames into root window
         self.create_file_frame().grid(row=0, column=0, pady=10)
-        self.create_options_frame().grid(row=1, column=0, sticky='w', pady=10)
-        tk.Button(self, text="Run", width=5).grid(row=2, column=0, sticky='e')
+        self.create_columns_frame().grid(row=1, column=0)
+        self.create_options_frame().grid(row=2, column=0, pady=10)
+
+        tk.Button(self, text="Run", width=5, command=self.run).grid(row=3, column=0, sticky='e')
 
     def restore_variables(self):
         """
         Initializes variables that are necessary for the Tkinter graphical user interface.
         """
 
-        # loads the location and key variables from data
-        file_locations = open("data/locations.txt", 'r').read().split('\n')
-        keys = open("data/keys.txt", 'r').read().split('\n')
+        # attempts to load in the data from storage and, if no file is present, one is created
+        try:
 
-        # sets the tkinter variables to the values pulled from data
-        self.data_location_variable.set(file_locations[0])
-        self.results_location_variable.set(file_locations[1])
-        self.facebook_access_token.set(keys[0])
-        self.geonames_username.set(keys[1])
-        self.yelp_api_key.set(keys[2])
+            # opens the file that stores the location of the csv files
+            file_locations = open("data/locations.txt", 'r+').read().split('\n')
 
-        # set the Google option to true as it doesn't need an API key
+            # loads that data into their proper Tkinter variables
+            self.data_location_variable.set(file_locations[0])
+            self.results_location_variable.set(file_locations[1])
 
-        self.google_variable.set(True)
+        except FileNotFoundError:
 
-        # if the Facebook key is not empty and the GeoNames username is not empty
-        if keys[0] != "" and keys[0] != "":
+            # if the file could not be found, create a new one
+            open("data/locations.txt", 'w+')
 
-            # check the option to scrape Facebook
-            self.facebook_variable.set(True)
+        except IndexError:
 
-        # if the Yelp key is not empty
-        if keys[2] != "":
+            # if the file could not be found, create a new one
+            open("data/columns.txt", 'w+')
 
-            # check the option to scrape Yelp
-            self.yelp_variable.set(True)
+        try:
+
+            # opens the data file with the columns of interest in it
+            columns = open("data/columns.txt", 'r+').read().split('\n')
+
+            # loads the column data into the proper Tkinter variables
+            self.name_columns.set(columns[0])
+            self.location_columns.set(columns[1])
+
+        except FileNotFoundError:
+
+            # if the file could not be found, create a new one
+            open("data/columns.txt", 'w+')
+
+        except IndexError:
+
+            # if the file could not be found, create a new one
+            open("data/columns.txt", 'w+')
+
+        try:
+
+            # opens the keys file and reads the data
+            keys = open("data/keys.txt", 'r+').read().split('\n')
+
+            # reads the data into the proper Tkinter variables
+            self.facebook_access_token.set(keys[0])
+            self.geonames_username.set(keys[1])
+            self.yelp_api_key.set(keys[2])
+
+        except FileNotFoundError:
+
+            # if the file could not be found, create a new one
+            open("data/keys.txt", 'w+')
+
+        except IndexError:
+
+            # if the file could not be found, create a new one
+            open("data/columns.txt", 'w+')
 
         # adds traces to variables so that they are saved when edited
         self.data_location_variable.trace("w", self.save)
         self.results_location_variable.trace("w", self.save)
+        self.name_columns.trace("w", self.save)
+        self.location_columns.trace("w", self.save)
         self.facebook_access_token.trace("w", self.save)
         self.geonames_username.trace("w", self.save)
         self.yelp_api_key.trace("w", self.save)
-        self.facebook_variable.trace("w", self.save)
-        self.google_variable.trace("w", self.save)
-        self.yelp_variable.trace("w", self.save)
 
     def create_file_frame(self):
         """
@@ -91,11 +123,31 @@ class Application(tk.Frame):
         tk.Button(file_frame, width=5, text="...", command=self.choose_data_file).grid(row=0, column=2)
 
         # creates and grids widgets necessary for choosing results file
-        tk.Label(file_frame, text="Results file", width=10, anchor='w').grid(row=1, column=0, sticky='w')
+        tk.Label(file_frame, text="Results file", width=10, anchor='w').grid(row=1, column=0)
         tk.Entry(file_frame, width=35, textvariable=self.results_location_variable).grid(row=1, column=1)
         tk.Button(file_frame, width=5, text="...", command=self.choose_results_location).grid(row=1, column=2)
 
         return file_frame
+
+    def create_columns_frame(self):
+        """
+        Returns a frame that contains the widgets necessary for chooseing which columns contain business data.
+
+        :return columns_frame: a frame containing the widgets for choosing the columns of the csv document
+        """
+
+        # creates the columns frame
+        columns_frame = tk.Frame(master=self)
+
+        # creates and grids widgets necessary for choosing which columns in the file correspond to which business data
+        tk.Label(columns_frame, text="Business Name Columns", width=20, anchor='w').grid(row=0, column=0)
+        tk.Entry(columns_frame, width=30, textvariable=self.name_columns).grid(row=0, column=1)
+
+        tk.Label(columns_frame, text="Business Location Columns", width=20, anchor='w').grid(row=1, column=0)
+        tk.Entry(columns_frame, width=30, textvariable=self.location_columns).grid(row=1, column=1)
+
+        return columns_frame
+
 
     def create_options_frame(self):
         """
@@ -108,29 +160,20 @@ class Application(tk.Frame):
         # creates the options frame
         options_frame = tk.Frame(master=self)
 
-        # adds Facebook label and check box to the options frame
-        tk.Label(options_frame, text="Facebook", anchor='w').grid(row=1, column=0)
-        tk.Checkbutton(options_frame, variable=self.facebook_variable).grid(row=1, column=1)
-
-        # adds Google label and check box to the options frame
-        tk.Label(options_frame, text="Google", anchor='w').grid(row=2, column=0)
-        tk.Checkbutton(options_frame, variable=self.google_variable).grid(row=2, column=1)
-
-        # adds Yelp label and check box to the options frame
-        tk.Label(options_frame, text="Yelp", anchor='w').grid(row=3, column=0)
-        tk.Checkbutton(options_frame, variable=self.yelp_variable).grid(row=3, column=1)
-
         # adds Facebook access token label and entry box to the options frame
-        tk.Label(options_frame, text="Facebook Access Token", anchor='w').grid(row=1, column=2)
-        tk.Entry(options_frame, width=20, textvariable=self.facebook_access_token).grid(row=1, column=3)
+        tk.Label(options_frame, text="Facebook Access Token", anchor='w').grid(row=0, column=0)
+        tk.Entry(options_frame, width=32, textvariable=self.facebook_access_token).grid(row=0, column=1)
+        tk.Button(options_frame, command=lambda: self.get_key("facebook"), text="?").grid(row=0, column=2)
 
         # adds GeoNames username label and entry box to the options frame
-        tk.Label(options_frame, text="GeoNames Username", anchor='w').grid(row=2, column=2)
-        tk.Entry(options_frame, width=20, textvariable=self.geonames_username).grid(row=2, column=3)
+        tk.Label(options_frame, text="GeoNames Username", anchor='w').grid(row=1, column=0)
+        tk.Entry(options_frame, width=32, textvariable=self.geonames_username).grid(row=1, column=1)
+        tk.Button(options_frame, command=lambda: self.get_key("geonames"), text="?").grid(row=1, column=2)
 
         # adds Yelp api key label and entry box to the options frame
-        tk.Label(options_frame, text="Yelp API Key", anchor='w').grid(row=3, column=2)
-        tk.Entry(options_frame, width=20, textvariable=self.yelp_api_key).grid(row=3, column=3)
+        tk.Label(options_frame, text="Yelp API Key", anchor='w').grid(row=2, column=0)
+        tk.Entry(options_frame, width=32, textvariable=self.yelp_api_key).grid(row=2, column=1)
+        tk.Button(options_frame, command=lambda: self.get_key("yelp"), text="?").grid(row=2, column=2)
 
         return options_frame
 
@@ -169,22 +212,87 @@ class Application(tk.Frame):
         keys_file.write(self.geonames_username.get() + '\n')
         keys_file.write(self.yelp_api_key.get() + '\n')
 
-        # opens the file location file
+        # opens the location file
         location_file = open('data/locations.txt', 'w')
 
         # writes the locations to the locations file
         location_file.write(self.data_location_variable.get() + '\n')
         location_file.write(self.results_location_variable.get() + '\n')
 
+        # opens the columns file
+        columns_file = open('data/columns.txt', 'w')
+
+        # write the column data to the columns file
+        columns_file.write(self.name_columns.get() + '\n')
+        columns_file.write(self.location_columns.get() + '\n')
+
     def run(self):
         """
         Runs the Business classification algorithm based on the user settings.
         """
 
-        # loads instances of scrapers
+        # load the facebook web scraper
         self.facebook = facebook.Facebook(self.facebook_access_token.get(), self.geonames_username.get())
-        self.google = google.Google()
+
+        # if facebook is not working
+        if not self.facebook.test():
+
+            # alert the user that their API keys are incorrect
+            messagebox.showinfo("Incorrect API Keys",
+                                "The entered Facebook access token or GeoNames username is incorrect.")
+
+        # load the yelp web scraper
         self.yelp = yelp.Yelp(self.yelp_api_key.get())
+
+        # if yelp is not working
+        if not self.yelp.test():
+
+            # alert the user that their API keys are incorrect
+            messagebox.showinfo("Incorrect API Keys", "The entered Yelp API key is incorrect.")
+
+        # load the google web scraper
+        self.google = google.Google()
+
+        # load the file reader and writer
+        r = reader.FileReader(self.data_location_variable.get())
+        w = writer.FileWriter(self.results_location_variable.get())
+
+        # TODO: search based on user selected columns
+
+        # iterate over the read data
+        for i in r:
+
+            # write the data to the results file
+            w.write([i[0] + i[1]] +
+                    self.facebook.get_category(i[1], i[6]) +
+                    self.google.get_category(i[1], i[6]) +
+                    self.yelp.get_category(i[1], i[6]))
+
+    def get_key(self, site):
+        """
+        Opens the help site for Facebook, Geonames, or Yelp for getting an API key.
+
+        :param site: a string for which site the user wants to get an API key for
+        """
+
+        # if the site is facebook
+        if site == 'facebook':
+
+            # open the instructions to get a facebook API key
+            webbrowser.open("https://developers.facebook.com/tools/accesstoken/")
+
+        # if the site is yelp
+        elif site == 'yelp':
+
+            # open the instructions to get a yelp API key
+            webbrowser.open("https://www.yelp.com/developers/documentation/v3/authentication")
+
+        # if the site is geonames
+        elif site == 'geonames':
+
+            # open the instructions to sign up for a geonames account
+            webbrowser.open("http://www.geonames.org/login")
+
 
 # creates the tkinter root
 root = tk.Tk()
@@ -193,7 +301,7 @@ root = tk.Tk()
 root.title('Business Classifier')
 
 # change the size of the main window
-root.geometry('500x220')
+root.geometry('500x280')
 
 # disallow the main window from being resized
 root.resizable(False, False)

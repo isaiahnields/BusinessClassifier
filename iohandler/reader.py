@@ -26,7 +26,7 @@ class FileReader:
         # return the iterator
         return self
 
-    def next(self):
+    def __next__(self):
         """
         Returns the next object in the iterator.
 
@@ -35,3 +35,6 @@ class FileReader:
 
         # return the next object in the iterator
         return next(self.reader)
+
+    def next(self):
+        return self.__next__()
