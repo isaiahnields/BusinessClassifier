@@ -46,9 +46,15 @@ class Facebook:
         :return request: the keys about the business of interest
         """
 
-        # uses geocoder to get the coordinates the from city and state information
-        coordinates = self.geocoder.geocode(location)[1]
-        center = str(coordinates[0]) + ',' + str(coordinates[1])
+        try:
+
+            # uses geocoder to get the coordinates the from city and state information
+            coordinates = self.geocoder.geocode(location)[1]
+            center = str(coordinates[0]) + ',' + str(coordinates[1])
+
+        except TypeError:
+
+            return None
 
         # packages the params into a dictionary
         params = {
@@ -87,6 +93,12 @@ class Facebook:
 
         # if there is no data at a specified index
         except IndexError:
+
+            # return a 'None' array
+            return ['None', 'None']
+
+        # if there is a type error
+        except TypeError:
 
             # return a 'None' array
             return ['None', 'None']

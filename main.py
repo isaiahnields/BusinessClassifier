@@ -9,6 +9,7 @@ import webbrowser
 class Application(tk.Frame):
 
     def __init__(self, master=None):
+
         # passes the tk root to the tk frame object
         super().__init__(master)
 
@@ -32,7 +33,7 @@ class Application(tk.Frame):
         self.create_columns_frame().grid(row=1, column=0)
         self.create_options_frame().grid(row=2, column=0, pady=10)
 
-        tk.Button(self, text="Run", width=5, command=self.run).grid(row=3, column=0, sticky='e')
+        tk.Button(self, text="Run", width=5, command= self.run).grid(row=3, column=0, sticky='e')
 
     def restore_variables(self):
         """
@@ -148,7 +149,6 @@ class Application(tk.Frame):
 
         return columns_frame
 
-
     def create_options_frame(self):
         """
         Creates a frame that contains the widgets necessary for choosing which services are used and specifying api
@@ -246,7 +246,6 @@ class Application(tk.Frame):
 
         # if yelp is not working
         if not self.yelp.test():
-
             # alert the user that their API keys are incorrect
             messagebox.showinfo("Incorrect API Keys", "The entered Yelp API key is incorrect.")
 
@@ -257,16 +256,53 @@ class Application(tk.Frame):
         r = reader.FileReader(self.data_location_variable.get())
         w = writer.FileWriter(self.results_location_variable.get())
 
-        # TODO: search based on user selected columns
+        # gets the name variable and splits up the columns
+        name_ = self.name_columns.get().split(',')
+
+        # initializes the names array to store indices
+        names = []
+
+        # iterates over the name_ array
+        for n in name_:
+
+            # appends the int loaded from storage to names
+            names.append(int(n))
+
+        # gets the locations variable and splits up the columns
+        location_ = self.location_columns.get().split(',')
+
+        # initializes the locations array to store indices
+        locations = []
+
+        # iterates over the location_ array
+        for l in location_:
+
+            # appends the index of the location to locations
+            locations.append(int(l))
 
         # iterate over the read data
         for i in r:
 
+            # initializes search variables
+            name = ""
+            location = ""
+
+            # iterate over names
+            for n in names:
+
+                # add the next column to the name variable
+                name += i[n] + " "
+
+            for l in locations:
+
+                # add the next column to the location variable
+                location += i[l] + " "
+
             # write the data to the results file
-            w.write([i[0] + i[1]] +
-                    self.facebook.get_category(i[1], i[6]) +
-                    self.google.get_category(i[1], i[6]) +
-                    self.yelp.get_category(i[1], i[6]))
+            w.write([i[0], i[1]] +
+                    self.facebook.get_category(name, location) +
+                    self.google.get_category(name, location) +
+                    self.yelp.get_category(name, location))
 
     def get_key(self, site):
         """
@@ -292,6 +328,7 @@ class Application(tk.Frame):
 
             # open the instructions to sign up for a geonames account
             webbrowser.open("http://www.geonames.org/login")
+
 
 
 # creates the tkinter root
