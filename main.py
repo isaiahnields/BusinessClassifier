@@ -4,6 +4,7 @@ from scraper import facebook, google, yelp
 from iohandler import reader, writer
 from tkinter import messagebox
 import webbrowser
+import _thread
 
 
 class Application(tk.Frame):
@@ -12,6 +13,8 @@ class Application(tk.Frame):
 
         # passes the tk root to the tk frame object
         super().__init__(master)
+
+        self.master = master
 
         # packs the the frame inside of the root application
         self.pack()
@@ -33,7 +36,7 @@ class Application(tk.Frame):
         self.create_columns_frame().grid(row=1, column=0)
         self.create_options_frame().grid(row=2, column=0, pady=10)
 
-        tk.Button(self, text="Run", width=5, command= self.run).grid(row=3, column=0, sticky='e')
+        tk.Button(self, text="Run", width=5, command=self.threaded_run).grid(row=3, column=0, sticky='e')
 
     def restore_variables(self):
         """
@@ -236,7 +239,6 @@ class Application(tk.Frame):
 
         # if facebook is not working
         if not self.facebook.test():
-
             # alert the user that their API keys are incorrect
             messagebox.showinfo("Incorrect API Keys",
                                 "The entered Facebook access token or GeoNames username is incorrect.")
@@ -264,7 +266,6 @@ class Application(tk.Frame):
 
         # iterates over the name_ array
         for n in name_:
-
             # appends the int loaded from storage to names
             names.append(int(n))
 
@@ -276,7 +277,6 @@ class Application(tk.Frame):
 
         # iterates over the location_ array
         for l in location_:
-
             # appends the index of the location to locations
             locations.append(int(l))
 
@@ -289,12 +289,10 @@ class Application(tk.Frame):
 
             # iterate over names
             for n in names:
-
                 # add the next column to the name variable
                 name += i[n] + " "
 
             for l in locations:
-
                 # add the next column to the location variable
                 location += i[l] + " "
 
@@ -304,7 +302,15 @@ class Application(tk.Frame):
                     self.google.get_category(name, location) +
                     self.yelp.get_category(name, location))
 
-    def get_key(self, site):
+    def threaded_run(self):
+        """
+        Executes the run method in a new thread.
+        """
+
+        _thread.start_new_thread(self.run, ())
+
+    @staticmethod
+    def get_key(site):
         """
         Opens the help site for Facebook, Geonames, or Yelp for getting an API key.
 
@@ -328,7 +334,6 @@ class Application(tk.Frame):
 
             # open the instructions to sign up for a geonames account
             webbrowser.open("http://www.geonames.org/login")
-
 
 
 # creates the tkinter root
