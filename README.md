@@ -1,23 +1,38 @@
-# BusinessClassifier
+# Business Classifier
 
+Automate business classification!
+
+![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
+![Build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/isaiahnields/SearchQueue/blob/master/LICENSE)
+
+## Table of Contents
+
+[Purpose](#purpose)<br />
+[Compatibility](#compatibility)<br />
+[Set Up](#set-up)<br />
+[Functionality](#functionality)<br />
+[Use Cases](#use-cases)<br />
+[Future Goals](#future-goals)<br />
+[iMobile3](#imobile3)
 
 ## Purpose
 
-The BusinessClassifier program is designed to categorize businesses using Google and Yelp data. It was originally built in order to facilitate and automate the classification of merchants who use iMobile3's point-of-sale and marketplace software. The data produced by this algorithm was manually translated to SIC codes for iMobile3's internal classification purposes.
+The Business Classifier program is designed to categorize businesses using data from Facebook, Google, and Yelp. It was originally built in order to automate the classification of merchants who use iMobile3's point-of-sale and marketplace software, however it can be used whenever a database of businesses needs to be classified.
 
 ## Compatibility
 
-The following code is compatible with Python 3.6. The Google maps classification algorithm is only compatible with Windows, Linux, and Mac OS as it requires Selenium in order to control Chrome. The Yelp algorithm directly interfaces with the Yelp API and thus can be run with essentially any Python 3.6 interpreter.
+The following code is compatible with Python 3.6 on Windows, Mac OS, and Linux.
 
 ## Setup
 
-1. Clone the repository to your computer and open it with PyCharm.
-2. Run 'pip install -r requirements.txt' in the PyCharm terminal to install dependencies.
-3. Obtain an API key from Yelp by creating an app (https://www.yelp.com/developers/documentation/v3/authentication).
-4. Paste the API key from Yelp into '/data/api_key.txt'.
-5. Add the data containing the businesses that you would like to classify to '/data/merchants.csv'.
-6. Edit 'main.py' such that the business data is correctly passed into get_category functions.
-7. You're done! You can now run 'main.py' and your businesses should begin to be classified.
+1. Clone the repository to your computer.
+2. Run 'pip install -r requirements.txt'.
+3. Run main.py with Python 3.6.
+
+## Functionality
+
+After running the programming according to the directions above, the user displayed a graphial interface.
 
 ## iMobile3
 
