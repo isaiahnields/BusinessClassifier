@@ -237,19 +237,27 @@ class Application(tk.Frame):
         # load the facebook web scraper
         self.facebook = facebook.Facebook(self.facebook_access_token.get(), self.geonames_username.get())
 
+        # if geonames is not working
+        if self.facebook.test() == "GeoNames":
+
+            # alert the user that their API key is incorrect
+            messagebox.showinfo("Incorrect API Key", "The entered GeoNames username is incorrect.")
+
         # if facebook is not working
-        if not self.facebook.test():
-            # alert the user that their API keys are incorrect
-            messagebox.showinfo("Incorrect API Keys",
-                                "The entered Facebook access token or GeoNames username is incorrect.")
+        elif self.facebook.test() == "Facebook":
+
+            # alert the user that their API key is incorrect
+            messagebox.showinfo("Incorrect API Key",
+                                "The entered Facebook access token is incorrect.")
 
         # load the yelp web scraper
         self.yelp = yelp.Yelp(self.yelp_api_key.get())
 
         # if yelp is not working
         if not self.yelp.test():
+
             # alert the user that their API keys are incorrect
-            messagebox.showinfo("Incorrect API Keys", "The entered Yelp API key is incorrect.")
+            messagebox.showinfo("Incorrect API Key", "The entered Yelp API key is incorrect.")
 
         # load the google web scraper
         self.google = google.Google()
@@ -343,7 +351,7 @@ root = tk.Tk()
 root.title('Business Classifier')
 
 # change the size of the main window
-root.geometry('500x280')
+root.geometry('500x265')
 
 # disallow the main window from being resized
 root.resizable(False, False)

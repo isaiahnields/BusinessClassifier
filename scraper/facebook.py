@@ -1,6 +1,6 @@
 import requests
 from geopy import geocoders
-from geopy.exc import GeocoderTimedOut
+from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 
 
 class Facebook:
@@ -46,15 +46,9 @@ class Facebook:
         :return request: the keys about the business of interest
         """
 
-        try:
-
-            # uses geocoder to get the coordinates the from city and state information
-            coordinates = self.geocoder.geocode(location)[1]
-            center = str(coordinates[0]) + ',' + str(coordinates[1])
-
-        except TypeError:
-
-            return None
+        # uses geocoder to get the coordinates the from city and state information
+        coordinates = self.geocoder.geocode(location)[1]
+        center = str(coordinates[0]) + ',' + str(coordinates[1])
 
         # packages the params into a dictionary
         params = {
@@ -109,5 +103,32 @@ class Facebook:
             # return a 'Timeout' array
             return ['Timeout', 'Timeout']
 
+        except UnboundLocalError:
+
+            return ['None', 'None']
+
+        except GeocoderServiceError:
+
+            return ['None', 'None']
+
     def test(self):
-        return self.get_category("Chipotle Mexican Grill", "32217")[0] == "Chipotle Mexican Grill"
+
+        try:
+
+            # test geocoder
+            self.geocoder.geocode("Jacksonville, FL")
+
+            # if facebook is not working and geonames is working
+            if self.get_category("Chipotle Mexican Grill", "32217")[0] != "Chipotle Mexican Grill":
+
+                # return that Facebook is not working
+                return "Facebook"
+
+            # if the geocoder can make a query, return True
+            return True
+
+        except GeocoderServiceError:
+
+            # if there is a service error return false
+            return "GeoNames"
+
