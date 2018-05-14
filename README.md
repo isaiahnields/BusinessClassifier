@@ -32,8 +32,26 @@ The following code is compatible with Python 3.6 on Windows, Mac OS, and Linux.
 
 ## Functionality
 
-After running the programming according to the directions above, the user displayed a graphial interface.
+After running the program according to the directions above, the window pictured below is displayed. In this section, the functionality of each widget in this window will be explored in depth.
 <img src="https://github.com/isaiahnields/BusinessClassifier/blob/master/screenshots/filled-gui.png" align="middle" width="600">
+
+### Input and Output
+
+#### Data File
+
+#### Results File
+
+#### Business Name Columns
+
+#### Business Location Columns
+
+### API Keys
+
+#### Facebook Access Token
+
+#### GeoNames Username
+
+#### Yelp API Key
 
 ## iMobile3
 
