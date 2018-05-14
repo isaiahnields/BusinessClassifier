@@ -34,6 +34,8 @@ The following code is compatible with Python 3.6 on Windows, Mac OS, and Linux.
 
 After running the programming according to the directions above, the user displayed a graphial interface.
 
+![Filled GUI](https://github.com/isaiahnields/BusinessClassifier/blob/master/screenshots/filled-gui.png)
+
 ## iMobile3
 
 For more information on iMobile3, see the link below:
