@@ -2,9 +2,19 @@
 
 Automate business classification!
 
+![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
 ![Build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/isaiahnields/SearchQueue/blob/master/LICENSE)
-![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
+
+## Table of Contents
+
+[Purpose](#purpose)<br />
+[Compatibility](#compatibility)<br />
+[Set Up](#set-up)<br />
+[Functionality](#functionality)<br />
+[Use Cases](#use-cases)<br />
+[Future Goals](#future-goals)<br />
+[iMobile3](#imobile3)
 
 ## Purpose
 
