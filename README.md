@@ -8,7 +8,7 @@ Automate business classification!
 
 ## Purpose
 
-The Business Classifier program is designed to categorize businesses using data from Facebook, Google, and Yelp. It was originally built in order to facilitate and automate the classification of merchants who use iMobile3's point-of-sale and marketplace software.
+The Business Classifier program is designed to categorize businesses using data from Facebook, Google, and Yelp. It was originally built in order to automate the classification of merchants who use iMobile3's point-of-sale and marketplace software.
 
 ## Compatibility
 
