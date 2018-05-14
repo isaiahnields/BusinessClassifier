@@ -33,7 +33,7 @@ The following code is compatible with Python 3.6 on Windows, Mac OS, and Linux.
 ## Functionality
 
 After running the programming according to the directions above, the user displayed a graphial interface.
-<img src="https://github.com/isaiahnields/BusinessClassifier/blob/master/screenshots/filled-gui.png" width="200">
+<img src="https://github.com/isaiahnields/BusinessClassifier/blob/master/screenshots/filled-gui.png" align="center" width="500">
 
 ## iMobile3
 
