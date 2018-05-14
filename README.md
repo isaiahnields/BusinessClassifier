@@ -18,7 +18,7 @@ Automate business classification!
 
 ## Purpose
 
-The Business Classifier program is designed to categorize businesses using data from Facebook, Google, and Yelp. It was originally built in order to automate the classification of merchants who use iMobile3's point-of-sale and marketplace software.
+The Business Classifier program is designed to categorize businesses using data from Facebook, Google, and Yelp. It was originally built in order to automate the classification of merchants who use iMobile3's point-of-sale and marketplace software, however it can be used whenever a database of businesses needs to be classified.
 
 ## Compatibility
 
@@ -29,6 +29,10 @@ The following code is compatible with Python 3.6 on Windows, Mac OS, and Linux.
 1. Clone the repository to your computer.
 2. Run 'pip install -r requirements.txt'.
 3. Run main.py with Python 3.6.
+
+## Functionality
+
+After running the programming according to the directions above, the user displayed a graphial interface.
 
 ## iMobile3
 
