@@ -1,4 +1,4 @@
-# BusinessClassifier
+# Business Classifier
 
 Automate business classification!
 
