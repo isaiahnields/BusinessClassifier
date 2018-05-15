@@ -2,7 +2,8 @@
 
 Automate business classification!
 
-![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/)
+[![Selenium 3.12.0](https://img.shields.io/badge/selenium-3.12.0-yellow.svg)](https://www.seleniumhq.org/)
 ![Build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/isaiahnields/SearchQueue/blob/master/LICENSE)
 
