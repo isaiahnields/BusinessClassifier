@@ -70,3 +70,11 @@ The GeoNames Username widget allows a user to enter a GeoNames username. This us
 #### Yelp API Key
 
 The Yelp API Key widget allows a user to enter a Yelp API key. This API key allows the scraper to access the functionality of GeoNames. [Learn more](http://www.geonames.org/login).
+
+## Use Cases
+
+There only use case for this program is business classification. The functionality of the program may be expanded in the future, however, there are no plans to do so at the momment.
+
+## Future Goals
+
+See [Projects](https://github.com/isaiahnields/BusinessClassifier/projects).
