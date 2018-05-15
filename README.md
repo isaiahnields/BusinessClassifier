@@ -66,7 +66,7 @@ The Facebook Access Token widget allows a user to enter a Facebok access token. 
 
 #### GeoNames Username
 
-The GeoNames Username widget allows a user to enter a GeoNames username. This username allows the scraper to access the functionality of GeoNames. [Learn more](http://www.geonames.org/login).
+The GeoNames Username widget allows a user to enter a GeoNames username. This username allows the scraper to access the functionality of GeoNames. [Learn more](https://www.yelp.com/developers/documentation/v3/authentication).
 
 #### Yelp API Key
 
