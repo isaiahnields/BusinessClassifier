@@ -15,7 +15,6 @@ Automate business classification!
 [Functionality](#functionality)<br />
 [Use Cases](#use-cases)<br />
 [Future Goals](#future-goals)<br />
-[iMobile3](#imobile3)
 
 ## Purpose
 
@@ -71,11 +70,3 @@ The GeoNames Username widget allows a user to enter a GeoNames username. This us
 #### Yelp API Key
 
 The Yelp API Key widget allows a user to enter a Yelp API key. This api key allows the scraper to access the functionality of GeoNames. [Learn more](http://www.geonames.org/login).
-
-## iMobile3
-
-For more information on iMobile3, see the link below:
-
-![alt text](https://www.imobile3.com/wp-content/uploads/2015/05/nav-logo-imobile3-dark-2x.png.pagespeed.ce.xYqpQD5-kC.png)
-
-https://www.imobile3.com/
