@@ -28,8 +28,8 @@ The following code is compatible with Python 3.6 on Windows, Mac OS, and Linux.
 ## Setup
 
 1. Clone the repository.
-2. Run 'pip install -r requirements.txt'.
-3. Run main.py with Python 3.6.
+2. Run ```pip install -r requirements.txt```.
+3. Run ```python3.6 main.py```.
 
 ## Functionality
 
