@@ -15,7 +15,7 @@ class Google:
         self.operating_system = platform.system()
 
         # get the directory of the current file
-        root_dir = os.path.dirname(os.path.abspath(__file__))[:50]
+        root_dir = os.path.dirname(os.path.abspath(__file__))[:51]
 
         # if the operating system is windows
         if self.operating_system == 'Windows':
