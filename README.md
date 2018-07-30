@@ -1,6 +1,6 @@
 # Business Classifier
 
-A business classifier that uses data from Facebook, Google, and Yelp.
+> A business classifier that uses data from Facebook, Google, and Yelp.
 
 [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/)
 [![Selenium 3.12.0](https://img.shields.io/badge/selenium-3.12.0-yellow.svg)](https://www.seleniumhq.org/)
