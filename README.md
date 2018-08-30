@@ -1,4 +1,4 @@
-# Business Classifier
+# <img src="https://raw.githubusercontent.com/isaiahnields/business-classifier/master/logo.png" width="48"> Business Classifier
 
 > A business classifier that uses data from Facebook, Google, and Yelp.
 
